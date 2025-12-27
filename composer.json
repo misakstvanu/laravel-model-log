@@ -1,0 +1,37 @@
+{
+    "name": "misakstvanu/laravel-model-log",
+    "description": "A Laravel package for logging model changes",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Misakstvanu\\ModelLog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Misakstvanu\\ModelLog\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Michal Štván",
+            "email": "michal@stvan.sk"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0|^11.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^8.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Misakstvanu\\ModelLog\\ModelLogServiceProvider"
+            ]
+        }
+    }
+}
