@@ -44,15 +44,26 @@ trait Loggable
         });
 
         static::deleted(function (Model $model) {
-            $operation = $model->trashed() ? 'soft_delete' : 'delete';
             ModelLog::collectLog(
                 get_class($model),
                 $model->getKey(),
-                $operation,
+                'delete',
                 $model->getOriginal(),
                 null
             );
         });
+
+        if (method_exists(static::class, 'trashed')) {
+            static::trashed(function (Model $model) {
+                ModelLog::collectLog(
+                    get_class($model),
+                    $model->getKey(),
+                    'soft_delete',
+                    $model->getOriginal(),
+                    null
+                );
+            });
+        }
 
         if (method_exists(static::class, 'restored')) {
             static::restored(function (Model $model) {
