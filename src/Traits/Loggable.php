@@ -53,8 +53,8 @@ trait Loggable
             );
         });
 
-        if (method_exists(static::class, 'trashed')) {
-            static::trashed(function (Model $model) {
+        if (method_exists(static::class, 'softDeleted')) {
+            static::softDeleted(function (Model $model) {
                 ModelLog::collectLog(
                     get_class($model),
                     $model->getKey(),
