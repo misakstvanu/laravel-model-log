@@ -63,7 +63,7 @@ You can customize the behavior by editing `config/model-log.php`:
 - `models.exclude`: Array of models to exclude from logging
 - `excluded_attributes`: Attributes to exclude from logging (e.g., passwords)
 - `track_users`: Whether to track the user who made the change
-- `normalize_datetime_to_db_format`: Normalize date/datetime values to DB format before logging (default: `false`)
+- `normalize_datetime_to_db_format`: Normalize date/datetime values to DB format before logging (default: `false`), useful to avoid false-positive changes when equivalent datetime values use different formats
 - `user_model`: Custom user model class
 
 ## Database Schema

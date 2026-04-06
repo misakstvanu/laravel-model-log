@@ -85,10 +85,7 @@ class ModelLog extends Model
         }
 
         $model = new $modelClass;
-        $dateFormat = $model->getDateFormat();
-        $dateAttributes = method_exists($model, 'getDates')
-            ? $model->getDates()
-            : [$model->getCreatedAtColumn(), $model->getUpdatedAtColumn()];
+        $dateAttributes = [$model->getCreatedAtColumn(), $model->getUpdatedAtColumn()];
 
         foreach ($model->getCasts() as $attribute => $castType) {
             if (!in_array($castType, ['date', 'datetime', 'immutable_date', 'immutable_datetime'], true)) {
