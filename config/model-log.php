@@ -53,7 +53,7 @@ return [
     |
     */
 
-    'normalize_datetime_to_db_format' => false,
+    'normalize_datetime_to_db_format' => env('MODEL_LOG_NORMALIZE_DATETIME', false),
 
     /*
     |--------------------------------------------------------------------------
