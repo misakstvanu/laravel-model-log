@@ -45,6 +45,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Normalize Date/Time Values
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, date and datetime attributes are normalized to the model's
+    | database format before they are stored in logs.
+    |
+    */
+
+    'normalize_datetime_to_db_format' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | User Model
     |--------------------------------------------------------------------------
     |
