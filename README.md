@@ -77,6 +77,14 @@ The `model_logs` table contains:
 - `user_id`: The ID of the user who made the change (nullable)
 - `created_at`: Timestamp of the change
 
+## Testing
+
+Run the package tests with:
+
+```bash
+vendor/bin/phpunit -c phpunit.xml.dist
+```
+
 ## License
 
 This package is open-sourced software licensed under the [MIT license](LICENSE).
