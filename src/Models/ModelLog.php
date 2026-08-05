@@ -26,7 +26,7 @@ class ModelLog extends Model
     ];
 
     /**
-     * Collected logs to be saved at the end of the request.
+     * Collected logs to be saved at the end of the request, keyed by log class.
      */
     protected static array $collectedLogs = [];
 
@@ -52,7 +52,7 @@ class ModelLog extends Model
             $userId = Auth::id();
         }
 
-        static::$collectedLogs[] = [
+        self::$collectedLogs[static::class][] = [
             'model_class' => $modelClass,
             'model_id' => $modelId,
             'operation' => $operation,
@@ -69,9 +69,21 @@ class ModelLog extends Model
      */
     public static function saveCollectedLogs(): void
     {
-        if (!empty(static::$collectedLogs)) {
-            static::insert(static::$collectedLogs);
-            static::$collectedLogs = [];
+        $logs = self::$collectedLogs[static::class] ?? [];
+
+        if (!empty($logs)) {
+            unset(self::$collectedLogs[static::class]);
+            static::insert($logs);
+        }
+    }
+
+    /**
+     * Save collected logs for every log class that collected entries.
+     */
+    public static function saveAllCollectedLogs(): void
+    {
+        foreach (array_keys(self::$collectedLogs) as $logClass) {
+            $logClass::saveCollectedLogs();
         }
     }
 

@@ -45,6 +45,40 @@ class User extends Model
 
 That's it! All changes to the model will be automatically logged to the `model_logs` table.
 
+## Custom Model Log Class
+
+If you want a model to store its logs using your own log class (for example, to
+use a different table or add extra behavior), extend the package `ModelLog`
+model and override the `getModelLogClass()` method on your model:
+
+```php
+<?php
+
+namespace App\Models;
+
+use Misakstvanu\ModelLog\Models\ModelLog;
+
+class UserLog extends ModelLog
+{
+    protected $table = 'user_logs';
+}
+```
+
+```php
+class User extends Model
+{
+    use Loggable;
+
+    public static function getModelLogClass(): string
+    {
+        return UserLog::class;
+    }
+}
+```
+
+Logs are collected per log class and all of them are saved at the end of the
+request.
+
 ## Logged Operations
 
 The package logs the following operations:

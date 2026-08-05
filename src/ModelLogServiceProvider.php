@@ -26,7 +26,7 @@ class ModelLogServiceProvider extends ServiceProvider
 
         // Register terminating callback to save all collected logs at the end of the request
         $this->app->terminating(function () {
-            ModelLog::saveCollectedLogs();
+            ModelLog::saveAllCollectedLogs();
         });
     }
 }
