@@ -5,6 +5,8 @@ namespace Misakstvanu\ModelLog\Tests;
 use Illuminate\Support\Carbon;
 use Misakstvanu\ModelLog\Models\ModelLog;
 use Misakstvanu\ModelLog\Tests\Fixtures\Models\Article;
+use Misakstvanu\ModelLog\Tests\Fixtures\Models\CustomModelLog;
+use Misakstvanu\ModelLog\Tests\Fixtures\Models\Post;
 
 class LoggableTest extends TestCase
 {
@@ -79,5 +81,20 @@ class LoggableTest extends TestCase
 
         $this->assertSame('2026-01-10 12:30:00', $oldValues['published_at']);
         $this->assertSame('2026-01-10 12:30:00', $newValues['published_at']);
+    }
+
+    public function test_model_can_use_custom_model_log_class(): void
+    {
+        ModelLog::saveAllCollectedLogs();
+
+        $post = Post::create(['title' => 'Custom log']);
+
+        ModelLog::saveAllCollectedLogs();
+
+        $log = CustomModelLog::query()->latest('id')->firstOrFail();
+
+        $this->assertSame(Post::class, $log->model_class);
+        $this->assertSame($post->getKey(), (int) $log->model_id);
+        $this->assertSame(0, ModelLog::query()->where('model_class', Post::class)->count());
     }
 }

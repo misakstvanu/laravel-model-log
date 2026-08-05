@@ -8,6 +8,16 @@ use Misakstvanu\ModelLog\Models\ModelLog;
 
 trait Loggable
 {
+    /**
+     * The model log class used to store logs for this model.
+     *
+     * Override this method in your model to use a custom log class.
+     */
+    public static function getModelLogClass(): string
+    {
+        return ModelLog::class;
+    }
+
     public static function bootLoggable(): void
     {
         // Check if this model should be logged
@@ -24,7 +34,7 @@ trait Loggable
         }
 
         static::created(function (Model $model) {
-            ModelLog::collectLog(
+            static::getModelLogClass()::collectLog(
                 get_class($model),
                 $model->getKey(),
                 'create',
@@ -34,7 +44,7 @@ trait Loggable
         });
 
         static::updated(function (Model $model) {
-            ModelLog::collectLog(
+            static::getModelLogClass()::collectLog(
                 get_class($model),
                 $model->getKey(),
                 'update',
@@ -44,7 +54,7 @@ trait Loggable
         });
 
         static::deleted(function (Model $model) {
-            ModelLog::collectLog(
+            static::getModelLogClass()::collectLog(
                 get_class($model),
                 $model->getKey(),
                 'delete',
@@ -55,7 +65,7 @@ trait Loggable
 
         if (method_exists(static::class, 'softDeleted')) {
             static::softDeleted(function (Model $model) {
-                ModelLog::collectLog(
+                static::getModelLogClass()::collectLog(
                     get_class($model),
                     $model->getKey(),
                     'soft_delete',
@@ -67,7 +77,7 @@ trait Loggable
 
         if (method_exists(static::class, 'restored')) {
             static::restored(function (Model $model) {
-                ModelLog::collectLog(
+                static::getModelLogClass()::collectLog(
                     get_class($model),
                     $model->getKey(),
                     'restore',
@@ -79,7 +89,7 @@ trait Loggable
 
         if (method_exists(static::class, 'forceDeleted')) {
             static::forceDeleted(function (Model $model) {
-                ModelLog::collectLog(
+                static::getModelLogClass()::collectLog(
                     get_class($model),
                     $model->getKey(),
                     'force_delete',

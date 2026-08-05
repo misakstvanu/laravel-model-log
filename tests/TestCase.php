@@ -53,6 +53,25 @@ abstract class TestCase extends Orchestra
             $table->index('user_id');
         });
 
+        Schema::dropIfExists('custom_model_logs');
+        Schema::create('custom_model_logs', function (Blueprint $table) {
+            $table->id();
+            $table->string('model_class');
+            $table->unsignedBigInteger('model_id');
+            $table->string('operation');
+            $table->json('old_values')->nullable();
+            $table->json('new_values')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::dropIfExists('posts');
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->timestamps();
+        });
+
         Schema::dropIfExists('articles');
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
