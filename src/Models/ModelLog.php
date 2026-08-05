@@ -28,7 +28,7 @@ class ModelLog extends Model
     /**
      * Collected logs to be saved at the end of the request, keyed by log class.
      */
-    private static array $collectedLogs = [];
+    protected static array $collectedLogs = [];
 
     /**
      * Add a log entry to the collection.
